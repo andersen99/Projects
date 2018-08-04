@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<title>Dashboard</title>
+<body onload = "hInitialize()">
+<h1>Welcome Host</h1>
+<h2>Profile</h2>
+<textarea id = "hProfile" rows = "4" cols = "25">
+</textarea>
+<h2>Pending Reservations</h2>
+<h2>Upload an image</h2>
+<h2>Current unresolved guest issues</h2>
+<div>
+<form action = "../../host" method = "Get">
+<input type = "submit" value = "Logout">
+</form>
+</div>
+<script>
+function hInitialize(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("hProfile").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}
+	xhr.open("POST","../../../ReservationSystem/host");
+	xhr.send();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<title>Guest Account</title>
+<body onload = "initialize()">
+<h1>Welcome Guest</h1>
+<h2>Profile</h2>
+
+<textarea id = "profile" rows = "4" cols = "25">
+</textarea>
+<form action = "../../guest" method = "Post">
+  Update Profile: <br><input type="text" name="info" required><br>
+  <input type="submit" name="action" value="Update Username"formtarget = "profile"><br>
+  <input type="submit" name="action" value="Update Password" formtarget = "profile"><br>
+  <input type="submit" name="action" value="Update First Name" formtarget = "profile"><br>
+  <input type="submit" name="action" value="Update Last Name" formtarget = "profile"><br>
+</form>
+<div><form action = "../../guest" method = "Post">
+<input type = "submit" name = "action" value = "Logout">
+</form>
+</div>
+<h2>Room Listing</h2>
+<button type = "button" name = "checkRooms" onclick = "checkRooms()">Check Availability</button>
+<div>
+<textarea id = "rooms" rows = "6" cols = "25"></textarea>
+</div>
+<script>
+function initialize(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("profile").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/guest");
+	xhr.send();
+}
+function checkRooms(){
+	let xhr1 = new XMLHttpRequest();
+	xhr1.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("profile").innerHTML = xhr1.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr1.open("POST","../../../ReservationSystem/guest");
+	xhr1.send();
+}
+</script>
+</body>
+</html>
