@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+<title>Raise an Issue</title>
+<body onload = "loadReplies()">
+<h2>Allow us to help you with your problem</h2>
+<form name = "iss">
+Room Number: <br><input type = "text" name = "roomNo" required><br>
+Problem: <br><textarea id = "issContent"></textarea><br>
+<input id = "issButton" type = "button" onclick = "makeIss()" name = "action" value = "Send Issue">
+</form>
+<div id = "message"></div>
+<div><textarea id = "replies" rows = "6" cols = "30"></textarea></div>
+<div>
+<a href = "http://localhost:8085/ReservationSystem/Hotel Reservations/User Main/Guest.html">Return to main page</a>
+</div>
+<script>
+function makeIss(){
+	let roomNum = document.forms["iss"]["roomNo"].value;
+	let content = document.forms["iss"]["issContent"].value;
+	let button = document.getElementById("issButton").value;
+	var data = "roomNo=" + encodeURIComponent(roomNum) + "&action=" + encodeURIComponent(button)
+				+ "&issContent=" + encodeURIComponent(content);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("message").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/raiseissue");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+function loadReplies(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("replies").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}
+	xhr.open("POST","../../../ReservationSystem/raiseissue");
+	xhr.send();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<title>Reservations</title>
+<body onload = "rInitialize()">
+<h2>Available Rooms</h2>
+<textarea id = "rooms" rows = "5" cols = "25"></textarea>
+<div>
+<form name = "reserve">
+Room Number <br><input type= "text" name= "roomNo" required>
+<input id = "reserveButton" type = "submit" name = "action"  onclick = "makeRes()" value = "Make Reservation">
+</form>
+</div>
+<div id = "message"></div>
+<input id = "showButton" type = "button" onclick = "getRes()" value = "Show Reservation Status">
+<div><textarea id = "reserve" style = visibility:hidden rows = "5" cols = "25"></textarea></div>
+<div><a href = "http://localhost:8085/ReservationSystem/Hotel Reservations/User Main/Guest.html">Return to main page</a></div>
+</body>
+<script>
+function rInitialize(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("rooms").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reserveroom");
+	xhr.send();
+}
+function makeRes(){
+	let roomNum = document.forms["reserve"]["roomNo"].value;
+	let button = document.getElementById("reserveButton").value;
+	var data = "roomNo=" + encodeURIComponent(roomNum) + "&action=" + encodeURIComponent(button);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("message").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reserveroom");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+function getRes(){
+	document.getElementById("showButton").style.visibility = "hidden";
+	document.getElementById("reserve").style.visibility = "visible";
+	let button = document.getElementById("showButton").value;
+	var data = "action=" + encodeURIComponent(button);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("reserve").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reserveroom");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+</script>
+</html>

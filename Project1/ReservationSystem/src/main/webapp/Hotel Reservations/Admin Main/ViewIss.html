@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+<title>View Issues</title>
+<body onload ="loadIss()">
+<h2>Issue List</h2>
+<textarea id = "issues" rows = "6" cols = "35"></textarea>
+<div>
+<form id = "iss">
+IssueNo: <br><input type = "text" name = "issNo" required><br>
+Reply: <br><textarea id = "replyContent"></textarea><br>
+<input id = "replyButton" type = "button" onclick = "replyIss()" value = "Reply">
+</form>
+</div>
+<div id = "message"></div>
+<div> 
+<a href = "http://localhost:8085/ReservationSystem/Hotel Reservations/Admin Main/Host.html">Back to Main Page</a>
+</div>
+<script>
+function loadIss(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("issues").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}
+	xhr.open("POST","../../../ReservationSystem/reviewissues");
+	xhr.send();
+}
+function replyIss(){
+	let issNum = document.forms["iss"]["issNo"].value;
+	let button = document.getElementById("replyButton").value;
+	let content = document.forms["iss"]["replyContent"].value
+	var data = "issueId=" + encodeURIComponent(issNum) + "&action=" + encodeURIComponent(button)
+				+ "&replyContent=" + encodeURIComponent(content);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("message").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reviewissues");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+</script>
+</body>
+</html>

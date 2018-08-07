@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<title>Create Account</title>
+<head><script type="text/javascript" src="LoginFunctions.js"></script></head>
+<body>
+<h1>Create a new Guest Account</h1>
+<form name = "loginpage">
+  User name: <br><input type="text" name="username" required><br>
+  Password: <br><input type="text" name="password" required><br>
+  First Name: <br><input type="text" name="firstname" required><br>
+  Last Name: <br><input type="text" name="lastname" required><br>
+  <input id = accButton type="submit" onclick = "validateGuest()" name="action" value="Create Account">
+</form>
+<div id = "message"></div>
+<div><a href = "http://localhost:8085/ReservationSystem/Hotel Reservations/Login Page/Login.html">Back to Login Page</a></div>
+</body>
+</html>

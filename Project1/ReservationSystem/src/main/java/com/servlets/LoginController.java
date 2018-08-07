@@ -38,6 +38,10 @@ public class LoginController extends HttpServlet{
 					isValid = true;
 				}
 			}
+			if(!isValid) {
+				PrintWriter pw = resp.getWriter();
+				pw.println("Invalid username or password");
+			}
 		}
 		else if("Host Login".equals(action)) {
 			HostDao hostDao = new HostDao();
@@ -48,13 +52,11 @@ public class LoginController extends HttpServlet{
 					isValid = true;
 					session.setAttribute("hostName",userName);
 				}
-			}	
-		}
-		if(!isValid) {
-			//resp.sendRedirect("Hotel Reservation/Login Page/login");
-			PrintWriter pw = resp.getWriter();
-			pw.println("Invalid username or password");
-			pw.close();
+			}
+			if(!isValid) {
+				PrintWriter pw = resp.getWriter();
+				pw.println("Invalid admin credentials");
+			}
 		}
 	}
 }

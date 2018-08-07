@@ -64,4 +64,18 @@ public class GuestDao{
 			ex.printStackTrace();
 		}
 	}
+	public void insertGuest(String guestId,String password,String fName,String lName) {
+		PreparedStatement ps = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+			ps = conn.prepareStatement("INSERT INTO Guests (GuestId,GuestPword,FirstName,LastName) VALUES (?,?,?,?)");
+			ps.setString(1,guestId);
+			ps.setString(2,password);
+			ps.setString(3,fName);
+			ps.setString(4, lName);
+			ps.executeUpdate();
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }

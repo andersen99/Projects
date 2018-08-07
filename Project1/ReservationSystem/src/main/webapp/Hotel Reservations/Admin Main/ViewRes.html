@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<title>View Reservations</title>
+<body onload ="loadRes()">
+<h2>Reservation List</h2>
+<textarea id = "reservations" rows = "6" cols = "35"></textarea>
+<div>
+<form id = "res">
+ReservationNo: <br><input type = "text" name = "resNo" required><br>
+<input id = "approveButton" type = "button" onclick = "approveRes()" value = "Approve"><br>
+<input id = "denyButton" type = "button" onclick = "denyRes()" value = "Deny">
+</form>
+</div>
+<div id = "message"></div>
+<div>
+<a href = "http://localhost:8085/ReservationSystem/Hotel Reservations/Admin Main/Host.html">Back to Main Page</a>
+</div>
+<script>
+function loadRes(){
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("reservations").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}
+	xhr.open("POST","../../../ReservationSystem/reviewreservation");
+	xhr.send();
+}
+function approveRes(){
+	let resNum = document.forms["res"]["resNo"].value;
+	let button = document.getElementById("approveButton").value;
+	var data = "reserveNo=" + encodeURIComponent(resNum) + "&action=" + encodeURIComponent(button);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("message").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reviewreservation");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+function denyRes(){
+	let resNum = document.forms["res"]["resNo"].value;
+	let button = document.getElementById("denyButton").value;
+	var data = "reserveNo=" + encodeURIComponent(resNum) + "&action=" + encodeURIComponent(button);
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(this.readyState == 4) {
+			if (this.status == 200) {
+				document.getElementById("message").innerHTML = xhr.responseText;
+			} else {
+				alert("error" + this.status);
+			}
+		}
+	}	
+	xhr.open("POST","../../../ReservationSystem/reviewreservation");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send(data);
+}
+</script>
+</body>
+</html>
